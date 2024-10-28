@@ -1,6 +1,6 @@
 import { SlMenu } from "react-icons/sl";
 import "./App.css";
-import "@dotlottie/player-component";
+// import "@dotlottie/player-component";
 import { useState } from "react";
 
 function App() {
@@ -13,6 +13,55 @@ function App() {
 
     setTimeout(() => setCopied(false), 3000); // Reset after 3 seconds
   };
+
+
+// footer 
+
+  const socials = [
+    { name: 'Telegram', url: 'https://t.me/janetethereum' },
+    { name: 'Twitter (X)', url: 'https://x.com/NeuralJanet' },
+    { name: 'Instagram', url: '#' },
+  ];
+
+  const markets = [
+    { name: 'Dextools', url: 'https://www.dextools.io/app/en/ether/pair-explorer/0x6a1041865b76d1dc33da0257582591227c57832c?' },
+    { name: 'Coinmarketcap', url: '#' },
+    { name: 'Coingecko', url: '#' },
+    { name: 'Dextools', url: '#' },
+  ];
+
+  const NavSection = ({ title, items }) => (
+    <div className="footer_nav">
+      <p className="nav_title">{title}</p>
+      {items.map((item, index) => (
+        <div
+          key={index}
+          className="footer_nav_link"
+          onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}
+          role="button"
+          style={{ cursor: 'pointer' }}
+        >
+          {item.name}
+        </div>
+      ))}
+    </div>
+  );
+
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navItems = [
+    { name: 'Home', isActive: true },
+    { name: 'About' },
+    { name: 'Tokenomics' },
+    { name: 'FAQ' },
+    { name: 'Buy Janet', isHighlighted: true },
+  ];
+
+  const socialIcons = [
+    { src: '/image/telegram-fill.svg', alt: 'Telegram' },
+    { src: '/image/twitter-fill.svg', alt: 'Twitter' },
+  ];
+
   // const LottiePlayer = ({ top, left, right, width, height }) => {
   //   return (
   //     <dotlottie-player
@@ -27,59 +76,51 @@ function App() {
   // };
   return (
     <>
-      <div className="header">
-        <div className="conainer  header_container">
-          <div className="header_content">
-            <p className="header_logo">
-              <img
-                src={`${process.env.PUBLIC_URL}/image/header-logo.png`}
-                alt="header-logo"
-              />
-            </p>
-            <div className="gap-16 d-flex">
-              <div className="nav">
-                <div className="mobile burger">
-                  <SlMenu style={{ color: "white" }} />
-                </div>
-                <div className="nav_list">
-                  <p className="nav_item  active">
-                    <span className="nav_link">Home</span>
-                  </p>
-                  <p className="nav_item ">
-                    <span className="nav_link">About</span>
-                  </p>
-                  <p className="nav_item ">
-                    <span className="nav_link">Tokenomics</span>
-                  </p>
-                  <p className="nav_item ">
-                    <span className="nav_link">FAQ</span>
-                  </p>
-                  <p className="nav_item lighted">
-                    <span className="nav_link">Buy Janet</span>
-                  </p>
-                </div>
+    <div className="header">
+      <div className="container header_container">
+        <div className="header_content">
+          <div className="header_logo">
+            <img
+              src={`${process.env.PUBLIC_URL}/image/header-logo.png`}
+              alt="header-logo"
+            />
+          </div>
+          <div className="gap-16 d-flex">
+            {/* Navigation */}
+            <div className="nav">
+              <div className="mobile burger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <SlMenu style={{ color: '#c7b6d5', cursor: 'pointer',fontSize:'1.6rem' }} />
               </div>
-              <div className="socials">
-                <div className="social_item">
-                  {" "}
+              <div className={`nav_list ${isMenuOpen ? 'open' : ''}`}>
+                {navItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`nav_item ${item.isActive ? 'active' : ''} ${
+                      item.isHighlighted ? 'lighted' : ''
+                    }`}
+                  >
+                    <span className="nav_link">{item.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="socials">
+              {socialIcons.map((icon, index) => (
+                <div key={index} className="social_item">
                   <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`${process.env.PUBLIC_URL}/image/telegram-fill.svg`}
-                    alt="social"
+                    style={{ verticalAlign: 'middle' }}
+                    src={`${process.env.PUBLIC_URL}${icon.src}`}
+                    alt={icon.alt}
                   />
                 </div>
-                <div className="social_item">
-                  <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`${process.env.PUBLIC_URL}/image/twitter-fill.svg`}
-                    alt="social"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
+    </div>
 
       {/* main ------------------------------------------- */}
       <div className="main">
@@ -268,7 +309,7 @@ function App() {
           <img
             src={`${process.env.PUBLIC_URL}/image/cloud-2.png`}
             className="p_absolute cloud_anim"
-            style={{ top: '-144px', right: '-8002px', zIndex: '-8' }}
+            style={{ top: '-144px', right: '-802px', zIndex: '-8' }}
             alt="Cloud Animation"
           />
         </div>
@@ -278,7 +319,7 @@ function App() {
     {/* token nomics  */}
     <div className="tokenomics" id="tokenomics">
       <div className="container token_container">
-        <div className="section-content p_relative">
+        <div className="section_content p_relative">
           <div className="tokenomics">
             <h1 className="h1_title text_center" style={{ width: 'auto' }}>Tokenomics</h1>
             <div className="token_info_container">
@@ -350,7 +391,7 @@ function App() {
     {/* message sect  */}
     <div className="message_sect">
       <div className="container">
-        <div className="section-content">
+        <div className="section_content">
           <div className="sect">
             <div className="message" style={{ borderRadius: '32px' }}>
               <img
@@ -365,6 +406,39 @@ function App() {
                 <p className="message_text">oh ur rich? you can buy me and marry</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {/* footer  */}
+    <div className="footer">
+      <div className="container footer_container">
+        <div className="footer_content">
+          <div className="d-flex flex-column">
+            <p className="footer_logo">
+              <img  src={`${process.env.PUBLIC_URL}/image/header-logo.png`} alt="Logo" />
+            </p>
+            <p className="copyright">Janet 2024 © All rights reserved</p>
+          </div>
+          <div className="d-flex" style={{ gap: '60px' }}>
+            <NavSection title="Socials" items={socials} />
+            <NavSection title="Markets" items={markets} />
+          </div>
+          <div className="disclaimer-container">
+            <h6 className="title">Disclaimer</h6>
+            <p className="disclaimer_text">
+              This meme token has no intrinsic value and is not a security. Its
+              price can fluctuate dramatically or go to zero at any time. By
+              interacting with or purchasing this token, you acknowledge the
+              high-risk nature of meme tokens and understand you may lose your
+              entire investment. Always do your own research (DYOR) before
+              engaging with any cryptocurrency. The creators, developers, and
+              affiliates take no responsibility for any financial losses or
+              adverse outcomes related to this token. Participation is entirely
+              at your own risk.
+            </p>
           </div>
         </div>
       </div>
